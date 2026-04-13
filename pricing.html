@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Услуги и цены | Belfed Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Courier Prime','Courier New',monospace;background:#fff;color:#111;font-size:14px;line-height:1.6}
+*{margin:0;padding:0;box-sizing:border-box}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 48px;border-bottom:1px solid #111;position:sticky;top:0;background:#fff;z-index:100}
+.nav-logo{font-size:18px;font-weight:700;letter-spacing:2px;text-decoration:none;color:#111}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{text-decoration:none;color:#111;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;transition:opacity .2s;padding-bottom:2px;border-bottom:1px solid transparent}
+.nav-links a:hover{opacity:.45}
+.nav-links a.nav-active{border-bottom:1px solid #111;opacity:1}
+.nav-btn{border:1px solid #111;padding:8px 16px;font-family:inherit;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;background:#111;color:#fff;cursor:pointer;text-decoration:none;transition:all .2s;border-bottom:none!important}
+.nav-btn:hover{background:#fff;color:#111}
+.lang-switch{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;color:#888;border:1px solid #ddd;padding:5px 10px;margin-left:12px;transition:all .2s}
+.lang-switch:hover{color:#111;border-color:#111}
+.page-header{padding:56px 48px 40px;border-bottom:1px solid #e0e0e0}
+.page-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:12px}
+.page-title{font-size:36px;font-weight:700;margin-bottom:12px}
+.content{padding:48px;max-width:800px}
+.content h2{font-size:14px;font-weight:700;margin:40px 0 16px;letter-spacing:1px;text-transform:uppercase}
+.content h2:first-child{margin-top:0}
+.content p{margin-bottom:16px;line-height:1.8;color:#333}
+.content ul{margin:0 0 16px 0;line-height:1.8;color:#333;list-style:none}
+.content ul li{margin-bottom:6px;padding-left:16px;position:relative}
+.content ul li::before{content:"—";position:absolute;left:0;color:#999}
+.content strong{color:#111}
+.plan-card{border:1px solid #111;padding:36px 40px;margin-bottom:24px;background:#fafafa}
+.plan-badge{display:inline-block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;background:#111;color:#fff;padding:4px 10px;margin-bottom:20px}
+.plan-name{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px;color:#888}
+.plan-price{font-size:36px;font-weight:700;margin-bottom:4px;letter-spacing:-1px}
+.plan-price span{font-size:13px;color:#999;font-weight:400;letter-spacing:0}
+.plan-desc{font-size:13px;color:#555;margin-bottom:24px;line-height:1.7}
+.plan-features{list-style:none;margin:0 0 0 0;padding:0}
+.plan-features li{font-size:13px;color:#333;margin-bottom:6px;padding-left:16px;position:relative}
+.plan-features li::before{content:"✓";position:absolute;left:0;color:#111;font-weight:700}
+.divider{border:none;border-top:1px solid #e0e0e0;margin:40px 0}
+.stats-table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:13px}
+.stats-table td{padding:10px 0;border-bottom:1px solid #eee;vertical-align:top}
+.stats-table td:first-child{color:#999;width:220px;padding-right:24px}
+.stats-table td:last-child{color:#111;font-weight:700}
+.note{font-size:12px;color:#999;line-height:1.7;margin-bottom:16px}
+.steps ol{list-style:none;counter-reset:steps;padding:0;margin:0 0 16px}
+.steps ol li{counter-increment:steps;padding-left:28px;position:relative;margin-bottom:10px;font-size:13px;color:#333}
+.steps ol li::before{content:counter(steps)".";position:absolute;left:0;color:#999;font-weight:700}
+.disclaimer-box{border:1px solid #ddd;padding:20px 24px;margin:24px 0;font-size:12px;color:#555;line-height:1.7;background:#f9f9f9}
+.disclaimer-box strong{color:#333}
+footer{padding:32px 48px;border-top:1px solid #111;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#888;letter-spacing:1px}
+@media(max-width:768px){
+nav{padding:16px 20px}.nav-links{display:none}
+.page-header,.content,footer{padding-left:20px;padding-right:20px}
+.page-title{font-size:26px}
+.plan-card{padding:24px 20px}
+.plan-price{font-size:28px}
+footer{flex-direction:column;gap:8px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+<a href="/" class="nav-logo">BELFED_</a>
+<div class="nav-links">
+<a href="/">Главная</a>
+<a href="/about.html">О нас</a>
+<a href="/results.html">Результаты</a>
+<a href="/pricing.html" class="nav-active">Услуги и цены</a>
+<a href="/disclaimer.html">Ограничение ответственности</a>
+<a href="https://t.me/BelfedBot">Telegram</a>
+<a href="/members.html" class="nav-btn">Личный кабинет</a>
+<a href="https://belfed.com/pricing.html" class="lang-switch">EN</a>
+</div>
+</nav>
+
+<div class="page-header">
+<div class="page-label">// Услуги и цены</div>
+<h1 class="page-title">Услуги и цены</h1>
+</div>
+
+<div class="content">
+
+<div class="disclaimer-box">
+<strong>Важно:</strong> Belfed Analytics — аналитический сервис, не брокер. Мы не принимаем деньги в управление и не торгуем от вашего имени. Все торговые решения вы принимаете самостоятельно.
+</div>
+
+<div class="plan-card">
+<div class="plan-badge">BETA</div>
+<div class="plan-name">BelFed Analytics — Премиум подписка</div>
+<div class="plan-price">1&nbsp;500 ₽ <span>/ месяц</span></div>
+<div class="plan-desc">8-летний опыт работы на рынках. Торговые идеи по акциям, крипто, сырьевым товарам и валютам — с чёткими уровнями входа, стопа и цели. 14 дней бесплатно при первой подписке.</div>
+<ul class="plan-features">
+<li>Торговые идеи: акции, крипто, сырьевые товары, валюты</li>
+<li>Чёткие параметры: вход, стоп-лосс, цель</li>
+<li>Еженедельные обзоры рынка</li>
+<li>Макро-аналитика и секторный анализ</li>
+<li>Образовательные разборы и обучающий контент</li>
+<li>Доступ к закрытому Telegram-каналу</li>
+<li>История всех сигналов и результатов</li>
+<li>Ответы на вопросы по идеям</li>
+<li>Приоритетный доступ к новым материалам</li>
+<li>Уведомления в реальном времени через Telegram</li>
+</ul>
+</div>
+
+<hr class="divider">
+
+<h2>Что входит в подписку</h2>
+<p>Все торговые идеи публикуются открыто на TradingView и дублируются в закрытом Telegram-канале. Каждая идея содержит:</p>
+<ul>
+<li>Long / Short — чёткое направление</li>
+<li>Уровень входа и стоп-лосс</li>
+<li>Один или несколько целевых уровней</li>
+<li>Обоснование идеи и контекст рынка</li>
+<li>RR (соотношение риск/прибыль)</li>
+<li>Обновления по открытым позициям</li>
+</ul>
+<p class="note">Идеи без чёткого направления, стопа и цели в статистику результатов не включаются.</p>
+
+<hr class="divider">
+
+<h2>Результаты с 2025 года</h2>
+<table class="stats-table">
+<tr>
+<td>Equities</td>
+<td>85.96R &nbsp;|&nbsp; Win Rate 47.89% &nbsp;|&nbsp; 71 идея</td>
+</tr>
+<tr>
+<td>Крипто</td>
+<td>90.39R &nbsp;|&nbsp; Win Rate 75% &nbsp;|&nbsp; 12 идей</td>
+</tr>
+</table>
+<p class="note">Все результаты выражены в единицах R. Прошлые результаты не гарантируют будущей доходности. Полное описание методологии: <a href="/disclaimer.html" style="color:#999">ограничение ответственности</a>.</p>
+
+<hr class="divider">
+
+<h2>Как подписаться</h2>
+<div class="steps">
+<ol>
+<li>Напишите боту — <a href="https://t.me/BelfedBot" target="_blank" rel="noopener noreferrer" style="color:#111;font-weight:700">@BelfedBot</a></li>
+<li>Выберите тариф и оплатите — принимаем Visa, MasterCard, Kassa</li>
+<li>Получите доступ к закрытому каналу автоматически</li>
+<li>14 дней бесплатного пробного периода при первой подписке</li>
+</ol>
+</div>
+
+<h2>Способы оплаты</h2>
+<ul>
+<li>Visa / MasterCard (российские и иностранные карты)</li>
+<li>ЮКасса / Kassa</li>
+<li>Другие способы — уточняйте у бота</li>
+</ul>
+
+<hr class="divider">
+
+<h2>Политика возврата</h2>
+<p>В связи с цифровым характером услуги, оплата за подписку не возвращается после начала расчётного периода. При первой подписке действует 14-дневный бесплатный период — вы можете отменить до его окончания без списания средств.</p>
+<p>По вопросам возврата и отмены обращайтесь: <strong>contact@belfed.com</strong></p>
+
+</div>
+
+<footer>
+<span>BELFED ANALYTICS</span>
+<span>belfed.ru</span>
+</footer>
+
+</body>
+</html>
