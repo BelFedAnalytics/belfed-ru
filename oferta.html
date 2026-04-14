@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BelFed Analytics</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+*, *:before, *:after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+body { font-family: 'JetBrains Mono', 'Courier New', monospace; background: #f5f2eb; color: #1a1a1a; line-height: 1.7; font-size: 14px; min-height: 100vh; display: flex; flex-direction: column; }
+.container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; width: 100%; }
+.site-header { padding: 32px 24px 0; max-width: 800px; margin: 0 auto; width: 100%; }
+.site-header a { color: #1a1a1a; text-decoration: none; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+.site-header a:hover { opacity: 0.6; }
+.breadcrumb { font-size: 11px; color: #999; margin-bottom: 48px; letter-spacing: 0.05em; }
+.breadcrumb a { color: #1a1a1a; text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+h1 { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; margin-bottom: 8px; color: #1a1a1a; }
+.page-title { font-family: 'Inter', sans-serif; font-size: clamp(24px, 4vw, 32px); font-weight: 300; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 40px; color: #1a1a1a; }
+h2 { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600; margin-top: 48px; margin-bottom: 16px; color: #1a1a1a; }
+h2:before { content: ''; color: #999; }
+h3 { font-size: 13px; font-weight: 600; margin-top: 32px; margin-bottom: 12px; }
+p { margin-bottom: 16px; max-width: 65ch; color: #333; }
+.divider { border: none; border-top: 1px solid #d4d0c8; margin: 40px 0; }
+ul, ol { margin-bottom: 16px; padding-left: 0; list-style: none; }
+ul li:before { content: '—'; color: #999; }
+ol { counter-reset: item; }
+ol li { counter-increment: item; }
+ol li:before { content: counter(item) '.'; color: #999; font-weight: 500; }
+li { margin-bottom: 8px; padding-left: 0; color: #333; }
+.plan-card { border: 1px solid #d4d0c8; padding: 32px; margin-bottom: 24px; background: #faf8f3; transition: border-color 0.2s; }
+.plan-card:hover { border-color: #1a1a1a; }
+.plan-name { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 8px; }
+.plan-price { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 300; margin-bottom: 4px; }
+.plan-price span { font-size: 14px; color: #999; font-family: 'JetBrains Mono', monospace; }
+.plan-desc { font-size: 13px; color: #666; margin-bottom: 20px; }
+.plan-features { font-size: 13px; }
+.plan-features li { margin-bottom: 6px; }
+.req-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 13px; }
+.req-table td { padding: 10px 0; border-bottom: 1px solid #e8e5de; vertical-align: top; }
+.req-table td:first-child { color: #999; width: 220px; padding-right: 24px; white-space: nowrap; }
+.req-table td:last-child { color: #1a1a1a; font-weight: 500; }
+.site-footer { margin-top: auto; padding: 32px 24px; max-width: 800px; margin-left: auto; margin-right: auto; width: 100%; font-size: 11px; color: #999; letter-spacing: 0.05em; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 16px; }
+.footer-links a { color: #666; text-decoration: none; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+.footer-links a:hover { color: #1a1a1a; }
+.legal-text { font-size: 13px; line-height: 1.8; color: #444; }
+.legal-text p { margin-bottom: 12px; }
+.legal-text h3 { margin-top: 36px; }
+.update-date { font-size: 11px; color: #999; margin-bottom: 32px; }
+.contact-block { border: 1px solid #d4d0c8; padding: 24px 32px; margin-bottom: 16px; background: #faf8f3; }
+.contact-label { font-size: 11px; color: #999; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+.contact-value { font-size: 15px; font-weight: 500; color: #1a1a1a; }
+.contact-value a { color: #1a1a1a; text-decoration: none; border-bottom: 1px solid #d4d0c8; }
+.contact-value a:hover { border-color: #1a1a1a; }
+.highlight { background: #1a1a1a; color: #f5f2eb; padding: 2px 8px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; display: inline-block; margin-bottom: 12px; }
+/* Requisites banner for every page footer */
+.req-banner { font-size: 11px; color: #999; margin-top: 8px; line-height: 1.6; }
+
+@media (max-width: 600px) {
+  .container { padding: 24px 16px 60px; }
+  .site-header { padding: 24px 16px 0; }
+  .plan-card { padding: 24px; }
+  .contact-block { padding: 20px 24px; }
+  .req-table td:first-child { width: auto; display: block; padding-bottom: 2px; border: none; }
+  .req-table td:last-child { display: block; padding-bottom: 12px; }
+  .req-table tr { display: block; border-bottom: 1px solid #e8e5de; }
+  .req-table td { border: none; }
+  .footer-links { gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="https://belfed.com" target="_blank" rel="noopener noreferrer">BelFed Analytics &middot; Est. 2025</a>
+</header>
+
+<div class="container">
+  <div class="breadcrumb"><a href="https://belfed.com" target="_blank" rel="noopener noreferrer">Главная</a> &rarr; Оферта</div>
+
+  <h1>Публичная оферта</h1>
+  <div class="page-title">Договор-оферта на оказание информационно-аналитических услуг</div>
+
+  <div class="update-date">Дата последнего обновления: 07 апреля 2026 г. Версия 1</div>
+
+  <div class="legal-text">
+
+    <h3>1. Общие положения</h3>
+
+    <p>1.1. <strong>Исполнитель</strong> — ИП Колесников Алексей Николаевич, ИНН 781103296545, ОГРНИП 326784700016572 — предлагает неопределённому кругу лиц услуги информационно-аналитического характера, описанные в настоящей Оферте.</p>
+    <p>1.2. Оферта считается акцептованной с момента оплаты подписки в соответствии со ст. 437 ГК РФ.</p>
+    <p>1.3. Актуальная редакция Оферты размещена на сайте, доступном по адресу belfed.com. Продолжение использования сервиса означает согласие с её условиями.</p>
+    <p>1.4. Подписчик — физическое лицо, акцептовавшее настоящую Оферту, оплатившее подписку и получившее доступ к материалам.</p>
+
+    <h3>2. Предмет договора</h3>
+
+    <p>2.1. Исполнитель предоставляет Подписчику доступ к информационно-аналитическим материалам, анализу рынков и торговым идеям на условиях подписки.</p>
+    <p>2.2. Услуги включают, но не ограничиваются:</p>
+    <ul>
+      <li>Торговые идеи с уровнями входа, выхода и управления риском</li>
+      <li>Рыночные обзоры и аналитические материалы</li>
+      <li>Доступ к закрытому каналу и личному кабинету</li>
+      <li>Возможность запроса анализа активов</li>
+      <li>Общение и обсуждение рыночных тем</li>
+      <li>Учебные материалы</li>
+      <li>Обновления портфеля и статусы позиций</li>
+      <li>Обновления через Telegram</li>
+    </ul>
+    <p>2.3. Тарифы и условия подписки указаны на странице <a href="./pricing.html" style="color:#1a1a1a">Услуги и цены</a> сайта belfed.com.</p>
+
+    <h3>3. Ограничение ответственности</h3>
+
+    <p>3.1. <strong>Материалы носят исключительно информационный, аналитический и образовательный характер и не являются индивидуальной инвестиционной рекомендацией или побуждением к совершению сделок.</strong></p>
+    <p>3.2. Исполнитель не несёт ответственности за торговые решения, убытки или упущенную выгоду, связанные с использованием материалов, <strong>включая прямые и косвенные финансовые потери</strong>.</p>
+    <p>3.3. Подписчик принимает на себя все риски, связанные с принятием торговых решений. Исполнитель не управляет средствами Подписчика.</p>
+    <p>3.4. Прошлые результаты не гарантируют будущую доходность. Track Record, опубликованный на belfed.com, носит справочный характер.</p>
+    <p>3.5. Исполнитель не является инвестиционным советником, брокером или управляющим активами.</p>
+
+    <h3>4. Порядок предоставления доступа</h3>
+
+    <p>4.1. Доступ предоставляется через закрытый канал Telegram.</p>
+    <p>4.2. Подключение осуществляется через Telegram-бота @BelfedBot после оплаты.</p>
+    <p>4.3. Доступ предоставляется автоматически.</p>
+    <p>4.4. Срок подписки указывается в тарифе. Обновление происходит автоматически.</p>
+
+    <h3>5. Оплата</h3>
+
+    <p>5.1. Оплата производится через сайт belfed.com.</p>
+    <p>5.2. Принимаются: Visa, MasterCard, Kassa и другие способы, указанные на странице услуг.</p>
+    <p>5.3. Подписка продлевается автоматически каждые 30 дней. Отменить можно в любой момент, доступ сохранится до конца оплаченного периода.</p>
+    <p>5.4. Возвраты осуществляются в соответствии с политикой возврата. Подробности указаны на странице услуг.</p>
+
+    <h3>6. Возврат</h3>
+
+    <p>6.1. В связи с цифровым характером услуги, возврат после начала расчётного периода не производится. Ст. 32 ЗоЗПП.</p>
+    <p>6.2. В течение 24 часов после оплаты, если услуга фактически не была оказана — полный возврат.</p>
+    <p>6.3. Заявка на возврат: <a href="mailto:support@belfed.com" style="color:#1a1a1a">support@belfed.com</a> — рассмотрение в течение 10 рабочих дней.</p>
+
+    <h3>7. Права и обязанности</h3>
+
+    <p><strong>7.1. Исполнитель обязуется:</strong></p>
+    <ul>
+      <li>Предоставлять доступ к материалам в рамках оплаченного периода</li>
+      <li>Обеспечивать техническую доступность сервиса</li>
+      <li>Публиковать обновления через Telegram-канал</li>
+      <li>Обрабатывать обращения подписчиков</li>
+      <li>Уведомлять об изменении условий</li>
+    </ul>
+    <p><strong>7.2. Подписчик обязуется:</strong></p>
+    <ul>
+      <li>Не передавать доступ третьим лицам</li>
+      <li>Не копировать и не распространять материалы</li>
+      <li>Соблюдать условия оферты</li>
+      <li>Самостоятельно оценивать риски</li>
+      <li>Не использовать материалы в коммерческих целях</li>
+      <li>Не публиковать материалы, включая скриншоты</li>
+      <li>Соблюдать правила общения</li>
+    </ul>
+
+    <h3>8. Персональные данные</h3>
+
+    <p>8.1. Исполнитель обрабатывает минимальный объём данных: email, Telegram-ID в соответствии с 152-ФЗ «О персональных данных».</p>
+    <p>8.2. Платёжные данные, включая CVV обрабатываются Kassa и не хранятся у Исполнителя.</p>
+    <p>8.3. Данные не передаются третьим лицам, кроме случаев, предусмотренных законом.</p>
+
+    <h3>9. Интеллектуальная собственность</h3>
+
+    <p>9.1. Все материалы, включая тексты, графики, идеи, методологию и дизайн, являются интеллектуальной собственностью Исполнителя.</p>
+    <p>9.2. Любое копирование или распространение запрещено.</p>
+
+    <h3>10. Прекращение доступа</h3>
+
+    <p>10.1. Исполнитель вправе ограничить доступ при нарушении условий Оферты.</p>
+    <p>10.2. Нарушение п. 7.2 может повлечь блокировку без возврата.</p>
+    <p>10.3. Подписчик может отказаться от подписки в любой момент. Доступ сохраняется до конца оплаченного периода. См. п. 7.2.</p>
+
+    <h3>11. Заключительные положения</h3>
+
+    <p>11.1. Оферта действует бессрочно. Исполнитель вправе вносить изменения, уведомив подписчиков за 15 дней.</p>
+    <p>11.2. Споры решаются в соответствии с законодательством РФ.</p>
+
+    <h3>12. Реквизиты</h3>
+
+    <table class="req-table">
+      <tr><td>Форма</td><td>ИП</td></tr>
+      <tr><td>ИНН</td><td>781103296545</td></tr>
+      <tr><td>ОГРНИП</td><td>326784700016572</td></tr>
+      <tr><td>Адрес</td><td>192174, г. Санкт-Петербург, ул. Купчинская, д. 144, лит. 39</td></tr>
+      <tr><td>Расчётный счёт</td><td>40802810103000062678</td></tr>
+      <tr><td>Банк</td><td>ПАО Тинькофф Банк</td></tr>
+      <tr><td>БИК</td><td>044030723</td></tr>
+      <tr><td>Корр. счёт</td><td>30101810100000000723</td></tr>
+      <tr><td>Email</td><td>support@belfed.com</td></tr>
+      <tr><td>Сайт</td><td>belfed.com</td></tr>
+    </table>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-links" style="margin-bottom:0;margin-top:0">
+    <a href="./pricing.html">Услуги и цены</a>
+    <a href="./delivery.html">Доставка</a>
+    <a href="./oferta.html">Оферта</a>
+    <a href="./contacts.html">Контакты</a>
+  </div>
+  <hr class="divider" style="margin:16px 0">
+  <div>&copy; 2025 BelFed Analytics</div>
+  <div class="req-banner">ИНН 781103296545 &middot; ОГРНИП 326784700016572</div>
+  <div style="margin-top:8px">Материалы сайта не являются индивидуальной инвестиционной рекомендацией и предназначены исключительно для информационных и образовательных целей.</div>
+</footer>
+
+</body>
+</html>
