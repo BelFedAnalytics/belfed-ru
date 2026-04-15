@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BelFed Analytics</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+    *, *:before, *:after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+    body { font-family: 'JetBrains Mono', 'Courier New', monospace; background: #f5f2eb; color: #1a1a1a; line-height: 1.7; font-size: 14px; min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; width: 100%; }
+    .site-header { padding: 32px 24px 0; max-width: 800px; margin: 0 auto; width: 100%; }
+    .site-header a { color: #1a1a1a; text-decoration: none; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+    .site-header a:hover { opacity: 0.6; }
+    .breadcrumb { font-size: 11px; color: #999; margin-bottom: 48px; letter-spacing: 0.05em; }
+    .breadcrumb a { color: #1a1a1a; text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    h1 { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; margin-bottom: 8px; color: #1a1a1a; }
+    .page-title { font-family: 'Inter', sans-serif; font-size: clamp(24px, 4vw, 32px); font-weight: 300; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 40px; color: #1a1a1a; }
+    h2 { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600; margin-top: 48px; margin-bottom: 16px; color: #1a1a1a; }
+    h3 { font-size: 13px; font-weight: 600; margin-top: 32px; margin-bottom: 12px; }
+    p { margin-bottom: 16px; max-width: 65ch; color: #333; }
+    .divider { border: none; border-top: 1px solid #d4d0c8; margin: 40px 0; }
+    .contact-block { border: 1px solid #d4d0c8; padding: 24px 32px; margin-bottom: 16px; background: #faf8f3; }
+    .contact-label { font-size: 11px; color: #999; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+    .contact-value { font-size: 15px; font-weight: 500; color: #1a1a1a; }
+    .contact-value a { color: #1a1a1a; text-decoration: none; border-bottom: 1px solid #d4d0c8; }
+    .contact-value a:hover { border-color: #1a1a1a; }
+    .req-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 13px; }
+    .req-table td { padding: 10px 0; border-bottom: 1px solid #e8e5de; vertical-align: top; }
+    .req-table td:first-child { color: #999; width: 220px; padding-right: 24px; white-space: nowrap; }
+    .req-table td:last-child { color: #1a1a1a; font-weight: 500; }
+    .disclaimer-box { border: 1px solid #d4d0c8; padding: 20px 24px; margin: 32px 0; font-size: 12px; color: #666; line-height: 1.7; background: #f5f2eb; }
+    .disclaimer-box strong { color: #444; }
+    .site-footer { margin-top: auto; padding: 32px 24px; max-width: 800px; margin-left: auto; margin-right: auto; width: 100%; font-size: 11px; color: #999; letter-spacing: 0.05em; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 16px; }
+    .footer-links a { color: #666; text-decoration: none; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+    .footer-links a:hover { color: #1a1a1a; }
+    .req-banner { font-size: 11px; color: #999; margin-top: 8px; line-height: 1.6; }
+    @media (max-width: 600px) {
+      .container { padding: 24px 16px 60px; }
+      .site-header { padding: 24px 16px 0; }
+      .contact-block { padding: 20px 24px; }
+      .req-table td:first-child { width: auto; display: block; padding-bottom: 2px; border: none; }
+      .req-table td:last-child { display: block; padding-bottom: 12px; }
+      .req-table tr { display: block; border-bottom: 1px solid #e8e5de; }
+      .req-table td { border: none; }
+      .footer-links { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="https://belfed.ru" target="_blank" rel="noopener noreferrer">BelFed Analytics &middot; Est. 2025</a>
+  </header>
+
+  <div class="container">
+    <div class="breadcrumb"><a href="https://belfed.ru">Главная</a> &rarr; Контакты</div>
+
+    <h1>Контакты</h1>
+    <div class="page-title">Связаться с нами</div>
+
+    <div class="contact-block">
+      <div class="contact-label">Email</div>
+      <div class="contact-value"><a href="mailto:support@belfed.com">support@belfed.com</a></div>
+    </div>
+
+    <div class="contact-block">
+      <div class="contact-label">Telegram-бот</div>
+      <div class="contact-value"><a href="https://t.me/BelfedBot" target="_blank" rel="noopener noreferrer">@BelfedBot</a></div>
+    </div>
+
+    <div class="contact-block">
+      <div class="contact-label">Сайт</div>
+      <div class="contact-value"><a href="https://belfed.ru" target="_blank" rel="noopener noreferrer">belfed.ru</a></div>
+    </div>
+
+    <div class="contact-block">
+      <div class="contact-label">Telegram-канал EN</div>
+      <div class="contact-value"><a href="https://t.me/MarketArtistryENG" target="_blank" rel="noopener noreferrer">@MarketArtistryENG</a></div>
+    </div>
+
+    <div class="contact-block">
+      <div class="contact-label">Telegram-канал RU</div>
+      <div class="contact-value"><a href="https://t.me/MarketArtistry" target="_blank" rel="noopener noreferrer">@MarketArtistry</a></div>
+    </div>
+
+    <hr class="divider">
+
+    <h2>Реквизиты</h2>
+
+    <table class="req-table">
+      <tr><td>Форма</td><td>ИП</td></tr>
+      <tr><td>ИП</td><td>Федоров Артем Игоревич</td></tr>
+      <tr><td>ИНН</td><td>781103296545</td></tr>
+      <tr><td>ОГРНИП</td><td>326784700016572</td></tr>
+      <tr><td>Расчётный счёт</td><td>40802810103000062678</td></tr>
+      <tr><td>Банк</td><td>ПАО Тинькофф Банк</td></tr>
+      <tr><td>Юр. адрес банка</td><td>191186, г. Санкт-Петербург, ул. Малая Морская, д. 36</td></tr>
+      <tr><td>БИК</td><td>044030723</td></tr>
+      <tr><td>Корр. счёт</td><td>30101810100000000723</td></tr>
+    </table>
+
+    <p style="font-size: 12px; color: #999; margin-top: 24px;">Платежи обрабатываются через сервис Kassa. Все права защищены. BelFed Analytics.</p>
+
+    <hr class="divider">
+
+    <h2>Время работы</h2>
+
+    <table class="req-table">
+      <tr><td>Режим работы</td><td>Дистанционно, онлайн</td></tr>
+      <tr><td>Время ответа</td><td>До 24 часов</td></tr>
+      <tr><td>Рабочие часы</td><td>Пн–Пт, 10:00–19:00 МСК</td></tr>
+      <tr><td>Поддержка</td><td>Ежедневно, до 24 часов</td></tr>
+    </table>
+
+    <div class="disclaimer-box" style="margin-top: 48px;">
+      <strong>Дисклеймер:</strong> Все материалы, публикуемые BelFed Analytics, носят исключительно информационно-аналитический характер. Они не являются индивидуальной инвестиционной рекомендацией. Принимая торговые решения, вы действуете на свой страх и риск.
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links" style="margin-bottom: 0; margin-top: 0;">
+      <a href="./pricing.html">Услуги и цены</a>
+      <a href="./delivery.html">Доставка</a>
+      <a href="./oferta.html">Оферта</a>
+      <a href="./contacts.html">Контакты</a>
+    </div>
+    <hr class="divider" style="margin: 16px 0;">
+    <div>&copy; 2025 BelFed Analytics</div>
+    <div class="req-banner">ИНН 781103296545 &middot; ОГРНИП 326784700016572</div>
+    <div style="margin-top: 8px;">Материалы сайта не являются индивидуальной инвестиционной рекомендацией и предназначены исключительно для информационных и образовательных целей.</div>
+  </footer>
+
+</body>
+</html>
