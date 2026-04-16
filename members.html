@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://script.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://script.google.com https://docs.google.com https://*.supabase.co; img-src 'self'; frame-src 'none';">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Личный кабинет — Belfed Analytics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f5f0;
+      --gray: #888;
+      --light-gray: #e8e8e3;
+      --border: #d0d0ca;
+      --green: #1a6b3a;
+      --red: #8b1a1a;
+      --font: 'Courier Prime', 'Courier New', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--white); color: var(--black); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 56px; }
+    .nav-logo { font-size: 17px; font-weight: 700; letter-spacing: 0.05em; text-decoration: none; color: var(--black); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--black); transition: opacity 0.2s; }
+    .nav-links a:hover { opacity: 0.5; }
+    .nav-cta { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--black); background: transparent; padding: 10px 20px; border: 1px solid var(--black); cursor: pointer; font-family: var(--font); transition: background 0.2s, color 0.2s; }
+    .nav-cta:hover { background: var(--black); color: var(--white); }
+    main { padding-top: 56px; }
+    .members-hero { padding: 80px 40px 40px; max-width: 900px; }
+    .members-hero .tag { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
+    .members-hero h1 { font-size: clamp(28px, 5vw, 48px); font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 16px; }
+    .members-hero p { font-size: 15px; color: #555; max-width: 560px; margin-bottom: 32px; }
+    .members-grid { padding: 0 40px 60px; max-width: 1100px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .member-card { background: var(--white); border: 1px solid var(--border); padding: 32px; transition: border-color 0.2s; text-decoration: none; color: var(--black); display: block; cursor: pointer; }
+    .member-card:hover { border-color: var(--black); }
+    .member-card .card-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); margin-bottom: 12px; }
+    .member-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .member-card p { font-size: 13px; color: #555; line-height: 1.6; }
+    .member-card .card-arrow { margin-top: 16px; font-size: 13px; color: var(--gray); letter-spacing: 0.1em; }
+    .account-section { border-top: 1px solid var(--border); padding: 40px; max-width: 600px; }
+    .account-section h2 { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
+    .account-info { font-size: 13px; margin-bottom: 12px; }
+    .account-info span { color: var(--gray); }
+    .status-badge { display: inline-block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--green); color: var(--green); }
+    .status-badge.expired { border-color: var(--red); color: var(--red); }
+    .status-badge.trial { border-color: #b8860b; color: #b8860b; }
+    #loginScreen { display: flex; justify-content: center; align-items: center; min-height: 80vh; padding-top: 56px; }
+    .login-box { background: var(--white); border: 1px solid var(--border); padding: 48px; max-width: 420px; width: 100%; text-align: center; }
+    .login-box h2 { font-size: 18px; letter-spacing: 0.1em; margin-bottom: 8px; }
+    .login-box .login-sub { font-size: 11px; color: var(--gray); margin-bottom: 28px; letter-spacing: 0.08em; }
+    .login-box input[type=email], .login-box input[type=password] { font-family: var(--font); width: 100%; padding: 12px 16px; font-size: 13px; border: 1px solid var(--border); background: var(--white); margin-bottom: 12px; outline: none; }
+    .login-box input:focus { border-color: var(--black); }
+    .login-box .login-btn { font-family: var(--font); width: 100%; padding: 14px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--black); color: var(--white); border: 1px solid var(--black); cursor: pointer; margin-top: 6px; transition: background 0.2s, color 0.2s; }
+    .login-box .login-btn:hover { background: transparent; color: var(--black); }
+    .login-box .login-btn:disabled { background: var(--gray); border-color: var(--gray); cursor: not-allowed; }
+    .login-error { color: var(--red); font-size: 12px; margin-top: 12px; display: none; }
+    .login-msg { color: var(--green); font-size: 12px; margin-top: 12px; display: none; }
+    .auth-tabs { display: flex; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
+    .auth-tab { flex: 1; font-family: var(--font); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 10px; background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; color: var(--gray); }
+    .auth-tab.active { color: var(--black); border-bottom-color: var(--black); }
+    .auth-tab:hover { color: var(--black); }
+    footer { border-top: 1px solid var(--border); padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--gray); flex-wrap: wrap; gap: 12px; }
+    footer a { color: var(--gray); text-decoration: none; }
+    footer a:hover { color: var(--black); }
+    .footer-links { display: flex; gap: 20px; }
+    #membersContent { display: none; }
+    .lang-switch { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--gray); border: 1px solid var(--border); padding: 6px 12px; transition: all 0.2s; margin-left: 16px; }
+    .lang-switch:hover { color: var(--black); border-color: var(--black); }
+    @media(max-width:700px) {
+      .members-hero { padding: 60px 20px 30px; }
+      .members-grid { padding: 0 20px 40px; grid-template-columns: 1fr; }
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .account-section { padding: 30px 20px; }
+      footer { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">BELFED_</a>
+    <ul class="nav-links">
+      <li><a href="/">Главная</a></li>
+      <li><a href="/results.html">Результаты</a></li>
+      <li><a href="/pricing.html">Услуги и цены</a></li>
+    </ul>
+    <div>
+      <button class="nav-cta" id="navAuthBtn" style="display:none" onclick="handleLogout()">Выйти</button>
+      <a href="https://belfed.com/members.html" class="lang-switch">EN</a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Login Screen -->
+    <div id="loginScreen">
+      <div class="login-box">
+        <h2>Личный кабинет</h2>
+        <p class="login-sub">Войдите в свой аккаунт</p>
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="showAuthTab('signin')">Вход</button>
+          <button class="auth-tab" onclick="showAuthTab('signup')">Регистрация</button>
+        </div>
+        <div id="signinForm">
+          <input type="email" id="siEmail" placeholder="Email адрес">
+          <input type="password" id="siPassword" placeholder="Пароль">
+          <button class="login-btn" onclick="handleSignIn()">Войти</button>
+          <p id="forgotPasswordLink" style="margin-top:12px"><a href="#" onclick="document.getElementById('forgotPasswordBlock').style.display='block';this.parentElement.style.display='none';return false;" style="font-size:12px;color:var(--gray)">Забыли пароль?</a></p>
+          <div id="forgotPasswordBlock" style="display:none;margin-top:16px">
+            <input type="email" id="resetEmail" placeholder="Введите ваш email">
+            <button class="login-btn" onclick="handleForgotPassword()">Отправить ссылку</button>
+            <p id="resetStatus" style="display:none;font-size:12px;margin-top:8px"></p>
+          </div>
+        </div>
+        <div id="signupForm" style="display:none">
+          <input type="email" id="suEmail" placeholder="Email адрес">
+          <input type="password" id="suPassword" placeholder="Пароль (мин. 6 символов)">
+          <input type="password" id="suPassword2" placeholder="Подтвердите пароль">
+          <button class="login-btn" onclick="handleSignUp()">Начать бесплатный период</button>
+          <p style="font-size:11px;color:var(--gray);margin-top:12px">30 дней бесплатного доступа • Без карты</p>
+        </div>
+        <p class="login-error" id="loginError"></p>
+        <p class="login-msg" id="loginMsg"></p>
+      </div>
+    </div>
+
+    <!-- Members Content (shown after login) -->
+    <div id="membersContent">
+      <section class="members-hero">
+        <p class="tag">// Личный кабинет</p>
+        <h1>Добро пожаловать</h1>
+        <p>Доступ к торговому дашборду, сигналам, аналитике и настройкам аккаунта.</p>
+      </section>
+
+      <div class="members-grid">
+        <a href="/dashboard.html" class="member-card">
+          <p class="card-label">// Трекер</p>
+          <h3>Торговый дашборд</h3>
+          <p>Открытые позиции, P&L, недельная статистика и скоркард за год по акциям и крипто.</p>
+          <p class="card-arrow">→ Открыть дашборд</p>
+        </a>
+        <a href="/stock-analysis.html" class="member-card">
+          <p class="card-label">// Аналитика</p>
+          <h3>Анализ акций</h3>
+          <p>Детальные торговые сетапы, технический анализ и секторные исследования.</p>
+          <p class="card-arrow">→ Открыть анализ</p>
+        </a>
+        <div class="member-card">
+          <p class="card-label">// Сетапы</p>
+          <h3>Торговые сетапы и результаты</h3>
+          <p>Активные идеи, завершённые сделки и сводка результатов.</p>
+          <p class="card-arrow">→ Открыть сетапы</p>
+        </div>
+        <div class="member-card">
+          <p class="card-label">// Аккаунт</p>
+          <h3>Настройки</h3>
+          <p>Управление подпиской, email, паролем и доступом к Telegram.</p>
+          <p class="card-arrow">→ Открыть настройки</p>
+        </div>
+      </div>
+
+      <section class="account-section">
+        <h2>// Аккаунт</h2>
+        <p class="account-info"><span>Email: </span> <span id="acctEmail">—</span></p>
+        <p class="account-info"><span>Статус: </span> <span id="acctStatus" class="status-badge">—</span></p>
+        <p class="account-info"><span>Участник с: </span> <span id="acctSince">—</span></p>
+        <p class="account-info" id="acctTrialRow" style="display:none"><span>Пробный период до: </span> <span id="acctTrialEnd">—</span></p>
+        <p class="account-info"><span>Telegram: </span> <span id="acctTelegram">Не привязан</span></p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <span>&copy; 2025–2026 Belfed Analytics. Все права защищены.</span>
+    <div class="footer-links">
+      <a href="/disclaimer.html">Ограничение ответственности</a>
+      <a href="/oferta.html">Оферта</a>
+      <a href="/contacts.html">Контакты</a>
+      <a href="https://belfed.com/members.html">EN</a>
+    </div>
+  </footer>
+
+  <script src="/belfed-auth.js"></script>
+  <script>
+    // --- Members page callbacks ---
+    function onAuthReady(profile, session, entitlement) {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('membersContent').style.display = 'block';
+      var navAuth = document.getElementById('navAuthBtn');
+      if (navAuth) navAuth.style.display = 'block';
+      if (session && session.user) {
+        document.getElementById('acctEmail').textContent = session.user.email;
+        var created = new Date(session.user.created_at);
+        document.getElementById('acctSince').textContent = created.toLocaleDateString('ru-RU', { year: 'numeric', month: 'short', day: 'numeric' });
+      }
+      if (profile) {
+        var st = entitlement.status;
+        var badge = document.getElementById('acctStatus');
+        badge.textContent = st.toUpperCase();
+        badge.className = 'status-badge';
+        if (st === 'expired') badge.classList.add('expired');
+        if (st === 'trial') badge.classList.add('trial');
+        if (st === 'trial' && profile.trial_end) {
+          var row = document.getElementById('acctTrialRow');
+          if (row) row.style.display = 'block';
+          var te = new Date(profile.trial_end);
+          document.getElementById('acctTrialEnd').textContent = te.toLocaleDateString('ru-RU', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+        if (profile.telegram_id) {
+          document.getElementById('acctTelegram').textContent = profile.telegram_id;
+        }
+      }
+    }
+    function onAuthSignedOut() {
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('membersContent').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
