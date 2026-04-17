@@ -38,8 +38,7 @@
     .members-hero p { font-size: 15px; color: #555; max-width: 560px; margin-bottom: 32px; }
     .members-grid { padding: 0 40px 60px; max-width: 1100px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
     .member-card { background: var(--white); border: 1px solid var(--border); padding: 32px; transition: border-color 0.2s; text-decoration: none; color: var(--black); display: block; cursor: pointer; }
-    .member-card:hover { border-color: var(--black); }
-    .member-card .card-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); margin-bottom: 12px; }
+<div class="members-grid">    .member-card .card-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); margin-bottom: 12px; }
     .member-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
     .member-card p { font-size: 13px; color: #555; line-height: 1.6; }
     .member-card .card-arrow { margin-top: 16px; font-size: 13px; color: var(--gray); letter-spacing: 0.1em; }
@@ -69,7 +68,12 @@
     footer a { color: var(--gray); text-decoration: none; }
     footer a:hover { color: var(--black); }
     .footer-links { display: flex; gap: 20px; }
-    #membersContent { display: none; }
+    .dev-notice { margin: 0 40px 32px; padding: 24px 32px; border: 1px solid var(--border); background: var(--white); max-width: 1060px; }
+        .dev-notice .notice-tag { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #b8860b; margin-bottom: 10px; }
+        .dev-notice p { font-size: 14px; color: #555; line-height: 1.7; }
+        .dev-notice a { color: var(--black); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+        .dev-notice a:hover { opacity: 0.6; }
+    members-grid { display: none; }
     .lang-switch { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--gray); border: 1px solid var(--border); padding: 6px 12px; transition: all 0.2s; margin-left: 16px; }
     .lang-switch:hover { color: var(--black); border-color: var(--black); }
     @media(max-width:700px) {
@@ -138,6 +142,10 @@
         <p>Доступ к онлайн трекеру, сигналам, аналитике и настройкам аккаунта.</p>
       </section>
 
+            <div class="dev-notice">
+                      <p class="notice-tag">// В разработке</p>
+                      <p>Веб-версия личного кабинета находится в разработке. Все материалы сервиса ежедневно публикуются в нашем <a href="https://t.me/BelfedBot" target="_blank">Telegram-канале →</a></p>
+                    </div>
       <div class="members-grid">
         <a href="https://belfed.com/dashboard.html" class="member-card">
           <p class="card-label">// Трекер</p>
