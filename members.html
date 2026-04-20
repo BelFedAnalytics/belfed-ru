@@ -42,7 +42,7 @@
     .member-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
     .member-card p { font-size: 13px; color: #555; line-height: 1.6; }
     .member-card .card-arrow { margin-top: 16px; font-size: 13px; color: var(--gray); letter-spacing: 0.1em; }
-    .account-section { border-top: 1px solid var(--border); padding: 40px; max-width: 600px; }
+    . { border-top: 1px solid var(--border); padding: 40px; max-width: 600px; }
     .account-section h2 { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
     .account-info { font-size: 13px; margin-bottom: 12px; }
     .account-info span { color: var(--gray); }
@@ -173,7 +173,7 @@
         </div>
       </div>
 
-      <section class="account-section">
+      <section class="account-section" style="max-width:1060px;"><h2>// Подписка</h2><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;"><button data-plan="month" class="login-btn" style="width:auto;padding:14px 22px;">1 месяц — 2 990 ₽</button><button data-plan="quarter" class="login-btn" style="width:auto;padding:14px 22px;">3 месяца — 7 990 ₽</button><button data-plan="year" class="login-btn" style="width:auto;padding:14px 22px;">12 месяцев — 24 990 ₽</button></div><p id="payStatus" style="margin-top:12px;font-size:12px;color:var(--gray);"></p></section>       <section class="account-section">
         <h2>// Аккаунт</h2>
         <p class="account-info"><span>Email: </span> <span id="acctEmail">—</span></p>
         <p class="account-info"><span>Статус: </span> <span id="acctStatus" class="status-badge">—</span></p>
@@ -194,7 +194,7 @@
     </div>
   </footer>
 
-  <script src="/belfed-auth.js"></script>
+  <script src="/belfed-auth.js"></script>   <script src="belfed-payments.js"></script>
   <script>
     // --- Members page callbacks ---
     function onAuthReady(profile, session, entitlement) {
