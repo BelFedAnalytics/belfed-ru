@@ -9,7 +9,7 @@
   var DEFAULT_RETURN_URL = window.location.origin + '/members.html?payment=success';
 
   function getSupabaseClient() {
-    if (window.belfedSupabase) return window.belfedSupabase;
+    if (typeof supaClient !== 'undefined') return supaClient; if (window.supaClient) return window.supaClient;
     if (window.supabaseClient) return window.supabaseClient;
     return null;
   }
