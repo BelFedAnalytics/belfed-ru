@@ -40,6 +40,7 @@ tbody tr:hover{background:#fafafa}
 tbody td{padding:14px 14px;font-size:13px;vertical-align:middle}
 .num{color:#ccc;font-size:11px}
 .ticker{font-weight:700;letter-spacing:1px;font-size:14px}
+.member-dot{display:inline-block;margin-left:6px;color:#111;font-size:10px;line-height:1;vertical-align:middle}
 .badge{display:inline-block;padding:3px 10px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;border:1px solid #111}
 .badge-long{background:transparent;color:#111}
 .badge-short{background:#111;color:#fff}
@@ -127,6 +128,9 @@ footer{padding:32px 48px;border-top:1px solid #111;display:flex;justify-content:
     <div class="s-item"><div class="s-val">-1.13R</div><div class="s-lbl">Ср. убыток</div></div>
 </div>
 
+<div class="disclaimer">
+Результаты включают все торговые возможности, опубликованные в публичных и приватных каналах. Идеи, по которым публиковались сигналы входа и выхода для подписчиков сервиса, отмечены &laquo;&#9679;&raquo;.
+</div>
 <div class="disclaimer">
 Впервые сталкиваетесь с R-мультипликаторами? <a href="/disclaimer.html">Как мы измеряем результаты</a> — краткое объяснение того, как читать эту таблицу. Прошлые результаты не гарантируют будущих. R-мультипликаторы рассчитываются относительно начального риска на сделку (1R = сумма риска). Эта страница обновляется вручную после закрытия каждой позиции. Никакие позиции не удаляются и не редактируются задним числом.
 </div>
@@ -252,6 +256,8 @@ footer{padding:32px 48px;border-top:1px solid #111;display:flex;justify-content:
             var exitP=(r[8]||'').trim();
             var result=(r[9]||'').trim();
             var tvLink=(r[10]||'').trim();
+            var membersSignal=(r[19]||'').trim().toLowerCase();
+            var memberDot=(membersSignal==='yes'||membersSignal==='y'||membersSignal==='true'||membersSignal==='1'||membersSignal==='•'||membersSignal==='●')?' <span class="member-dot" title="Сигнал для подписчиков">●</span>':'';
             if(!ticker)return;
             var rVal=parseFloat(result.replace(',','.'));
             var isClosed=status.toLowerCase()==='closed';
@@ -263,7 +269,7 @@ footer{padding:32px 48px;border-top:1px solid #111;display:flex;justify-content:
             var rDisplay=formatR(result);
             var analysisCell=tvLink&&tvLink.startsWith('http')?'<a class="tv-link" href="'+tvLink+'" target="_blank">TV <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></a>':'<span class="no-link">\u2014</span>';
             var tr=document.createElement('tr');
-            tr.innerHTML='<td class="num">'+(idx+1).toString().padStart(2,'0')+'</td><td><span class="ticker">'+ticker+'</span></td><td><span class="badge '+dirClass+'">'+dirLabel+'</span></td><td>'+entryDate+'</td><td>'+(exitDate||'\u2014')+'</td><td>'+entryP+'</td><td>'+(exitP||'\u2014')+'</td><td class="'+rClass+'">'+rDisplay+'</td><td>'+analysisCell+'</td>';
+            tr.innerHTML='<td class="num">'+(idx+1).toString().padStart(2,'0')+'</td><td><span class="ticker">'+ticker+'</span>'+memberDot+'</td><td><span class="badge '+dirClass+'">'+dirLabel+'</span></td><td>'+entryDate+'</td><td>'+(exitDate||'\u2014')+'</td><td>'+entryP+'</td><td>'+(exitP||'\u2014')+'</td><td class="'+rClass+'">'+rDisplay+'</td><td>'+analysisCell+'</td>';
             tbody.appendChild(tr);
         });
         var avgWin=wins>0?(winSum/wins):0;
