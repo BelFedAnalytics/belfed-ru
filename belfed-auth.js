@@ -126,43 +126,93 @@ async function handleSignUp() {
     });
     if (res.error) throw res.error;
 
-    // Fetch one-time TG deep-link with email + consent
-    var intentRes = await fetch(SUPABASE_URL + '/functions/v1/trial-intent-create', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email,
-        lang: 'ru',
-        source: 'web_signup',
-        accept_privacy: true,
-        accept_terms: true
-      })
-    });
-    var intentData = await intentRes.json();
-    var deepLink = (intentData && intentData.ok && intentData.deep_link)
-      ? intentData.deep_link
-      : 'https://t.me/BelfedBot?start=trial_link';
+    var userId = res.data && res.data.user ? res.data.user.id : null;
+    var consentNow = new Date().toISOString();
 
-    // Render success card
+    // Activate the 7-day trial immediately — no Telegram step required.
+    if (userId) {
+      try {
+        await supaClient.rpc('start_web_trial', {
+          p_user_id: userId,
+          p_lang: 'ru',
+          p_source: 'web_signup',
+          p_privacy_consent_at: consentNow,
+          p_terms_consent_at: consentNow,
+          p_consent_locale: 'ru'
+        });
+      } catch (e) { /* trial activation is best-effort; cabinet still works */ }
+    }
+
+    // Send the welcome email immediately (best-effort, rate-limited server-side).
+    try {
+      await fetch(SUPABASE_URL + '/functions/v1/welcome-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: SUPABASE_KEY,
+          Authorization: 'Bearer ' + SUPABASE_KEY
+        },
+        body: JSON.stringify({ email: email, lang: 'ru' })
+      });
+    } catch (e) { /* welcome email is best-effort */ }
+
+    // Get an optional one-time Telegram deep-link for live alerts (not required).
+    var deepLink = 'https://t.me/BelfedBot?start=trial_link';
+    try {
+      var intentRes = await fetch(SUPABASE_URL + '/functions/v1/trial-intent-create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          lang: 'ru',
+          source: 'web_signup',
+          accept_privacy: true,
+          accept_terms: true
+        })
+      });
+      var intentData = await intentRes.json();
+      if (intentData && intentData.ok && intentData.deep_link) deepLink = intentData.deep_link;
+    } catch (e) { /* deep-link is optional */ }
+
+    // Render success card: cabinet-first, email confirm, Telegram optional
     msgEl.innerHTML = ''
       + '<div class="signup-success">'
-      + '  <h3>Аккаунт создан</h3>'
-      + '  <p>Чтобы активировать 7-дневный доступ к личному кабинету и получать наши сделки в живом режиме — присоединяйтесь к нашей трейдинг-группе.</p>'
-      + '  <a class="cta-tg" href="' + deepLink + '" target="_blank" rel="noopener">Получить доступ к группе</a>'
-      + '  <div class="signup-success-note">Ссылка одноразовая, действует 15 минут. Если что — <a href="#" onclick="document.getElementById(\'signupForm\').querySelector(\'.login-btn\').click();return false;">запросите новую</a>.</div>'
+      + '  <h3>Аккаунт создан — пробный период активен</h3>'
+      + '  <p>Доступ к личному кабинету открыт на 7 дней. Мы отправили письмо на <b>' + email + '</b> — подтвердите адрес, чтобы получать уведомления.</p>'
+      + '  <p style="margin-top:12px"><b>Не пришло письмо?</b> Проверьте папку «Спам» или <a href="#" onclick="resendConfirmation(\'' + email.replace(/'/g, "\\'") + '\');return false;">отправьте повторно</a>.</p>'
+      + '  <a class="cta-tg" href="' + deepLink + '" target="_blank" rel="noopener">Подключить Telegram-уведомления (по желанию)</a>'
+      + '  <div class="signup-success-note">Telegram — это онлайн-алерты о сделках. Личный кабинет работает и без него. Ссылка одноразовая, действует 15 минут.</div>'
       + '</div>';
     msgEl.style.display = 'block';
 
-    // Auto-login if session already exists (shouldn't, but safe)
+    // Auto-login if session already exists (email confirmation may be disabled)
     if (res.data.session) {
       await checkProfile();
     }
   } catch (err) {
-    errEl.textContent = err.message || 'Ошибка регистрации';
+    var emsg = err.message || 'Ошибка регистрации';
+    if (/already registered|already been registered|User already/i.test(emsg)) {
+      errEl.innerHTML = 'Этот email уже зарегистрирован. <a href="#" onclick="showAuthTab(\'signin\');return false;" style="text-decoration:underline">Войдите</a> или <a href="#" onclick="if(document.getElementById(\'forgotPasswordLink\'))document.getElementById(\'forgotPasswordLink\').click();return false;" style="text-decoration:underline">восстановите пароль</a>.';
+    } else {
+      errEl.textContent = emsg;
+    }
     errEl.style.display = 'block';
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = prevBtnText || 'Начать 7 дней бесплатно'; }
   }
+}
+
+// Resend the Supabase email-confirmation link
+async function resendConfirmation(email) {
+  try {
+    var r = await supaClient.auth.resend({ type: 'signup', email: email, options: { emailRedirectTo: window.location.origin + '/confirm.html' } });
+    var msgEl = document.getElementById('loginMsg');
+    var note = document.createElement('div');
+    note.className = 'signup-success-note';
+    note.style.color = '#1a7a1a';
+    note.textContent = r.error ? ('Не удалось отправить: ' + r.error.message) : ('Письмо отправлено повторно на ' + email);
+    if (msgEl) msgEl.appendChild(note);
+  } catch (e) { /* ignore */ }
 }
 
 async function handleForgotPassword() {

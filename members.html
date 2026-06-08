@@ -142,10 +142,15 @@
         <p>Доступ к онлайн трекеру, сигналам, аналитике и настройкам аккаунта.</p>
       </section>
 
-            <div class="dev-notice">
-                      <p class="notice-tag">// В разработке</p>
-                      <p>Веб-версия личного кабинета находится в разработке. Все материалы сервиса ежедневно публикуются в нашем <a href="https://t.me/BelfedBot" target="_blank">Telegram-канале →</a></p>
-                    </div>
+      <section class="account-section tg-section" style="max-width:1060px;border:1px solid var(--border);padding:24px;margin-bottom:8px;">
+        <h2>// Telegram-уведомления <span style="text-transform:none;letter-spacing:0;color:var(--gray);font-weight:400;">— по желанию</span></h2>
+        <p style="margin-top:10px;font-size:14px;color:#555;line-height:1.6;">Подключите Telegram, чтобы получать <b>онлайн-алерты о сделках</b> в реальном времени и доступ в закрытую группу. Личный кабинет полностью работает и без этого.</p>
+        <div id="tgConnected" style="display:none;margin-top:14px;font-size:13px;color:#1a7a1a;">✓ Telegram подключён: <span id="tgUserLabel">—</span></div>
+        <div id="tgConnect" style="display:none;margin-top:14px;">
+          <a id="tgConnectBtn" href="https://t.me/BelfedBot?start=link" target="_blank" rel="noopener" class="login-btn" style="width:auto;padding:12px 20px;text-decoration:none;display:inline-block;">Подключить Telegram →</a>
+        </div>
+      </section>
+
       <div class="members-grid">
         <a href="https://belfed.com/dashboard.html" class="member-card">
           <p class="card-label">// Трекер</p>
@@ -153,27 +158,27 @@
           <p>Открытые позиции, P&L, недельная статистика и скоркард за год по акциям и крипто.</p>
           <p class="card-arrow">→ Открыть трекер</p>
         </a>
-        <a href="/stock-analysis.html" class="member-card">
+        <a href="https://belfed.com/analytics.html" class="member-card">
           <p class="card-label">// Аналитика</p>
-          <h3>Анализ акций</h3>
+          <h3>Анализ акций и рынков</h3>
           <p>Детальные торговые сетапы, технический анализ и секторные исследования.</p>
           <p class="card-arrow">→ Открыть анализ</p>
         </a>
-        <div class="member-card">
-          <p class="card-label">// Сетапы</p>
-          <h3>Торговые сетапы и результаты</h3>
-          <p>Активные идеи, завершённые сделки и сводка результатов.</p>
-          <p class="card-arrow">→ Открыть сетапы</p>
-        </div>
-        <div class="member-card">
+        <a href="/trades.html" class="member-card">
+          <p class="card-label">// Сделки</p>
+          <h3>Трек-рекорд сделок</h3>
+          <p>Завершённые сделки и сводка результатов. Новые сигналы — в Telegram.</p>
+          <p class="card-arrow">→ Открыть результаты</p>
+        </a>
+        <a href="#subscription" class="member-card" onclick="document.getElementById('subscription').scrollIntoView({behavior:'smooth'});return false;">
           <p class="card-label">// Аккаунт</p>
-          <h3>Настройки</h3>
-          <p>Управление подпиской, email, паролем и доступом к Telegram.</p>
-          <p class="card-arrow">→ Открыть настройки</p>
-        </div>
+          <h3>Подписка и настройки</h3>
+          <p>Статус подписки, оплата, email, пароль и Telegram — ниже на странице.</p>
+          <p class="card-arrow">→ К управлению</p>
+        </a>
       </div>
 
-      <section class="account-section" style="max-width:1060px;"><h2>// Подписка</h2><p style="margin-top:12px;font-size:14px;color:var(--gray);">⭐️ Founding Member — 1 050 ₽/мес (−30% навсегда)</p><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;"><a href="https://web.tribute.tg/s/XHG" target="_blank" rel="noopener" class="login-btn" style="width:auto;padding:14px 22px;text-decoration:none;display:inline-block;">Оформить подписку — 1 050 ₽/мес</a></div><p id="payStatus" style="margin-top:12px;font-size:12px;color:var(--gray);"></p></section>       <section class="account-section">
+      <section class="account-section" id="subscription" style="max-width:1060px;"><h2>// Подписка</h2><p id="subStatusLine" style="margin-top:12px;font-size:14px;color:#555;line-height:1.6;">⭐️ Founding Member — 1 050 ₽/мес (−30% навсегда). Оплатить можно здесь или прямо в боте — доступ обновится автоматически.</p><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;"><a href="https://web.tribute.tg/s/XHG" target="_blank" rel="noopener" class="login-btn" style="width:auto;padding:14px 22px;text-decoration:none;display:inline-block;">Оформить подписку — 1 050 ₽/мес</a><a href="https://t.me/tribute/app?startapp=sXHG" target="_blank" rel="noopener" class="login-btn" style="width:auto;padding:14px 22px;text-decoration:none;display:inline-block;background:transparent;color:var(--black);border:1px solid var(--black);">Оплатить в Telegram</a></div><p style="margin-top:14px;font-size:12px;color:var(--gray);">Управлять подпиской и отменить продление можно в <a href="https://t.me/tribute" target="_blank" rel="noopener" style="text-decoration:underline;">Tribute</a> в любое время.</p><p id="payStatus" style="margin-top:8px;font-size:12px;color:var(--gray);"></p></section>       <section class="account-section">
         <h2>// Аккаунт</h2>
         <p class="account-info"><span>Email: </span> <span id="acctEmail">—</span></p>
         <p class="account-info"><span>Статус: </span> <span id="acctStatus" class="status-badge">—</span></p>
@@ -194,7 +199,7 @@
     </div>
   </footer>
 
-  <script src="/belfed-auth.js"></script>   <script src="belfed-payments.js"></script>
+  <script src="/belfed-auth.js"></script>
   <script>
     // --- Members page callbacks ---
     function onAuthReady(profile, session, entitlement) {
@@ -220,8 +225,16 @@
           var te = new Date(profile.trial_end);
           document.getElementById('acctTrialEnd').textContent = te.toLocaleDateString('ru-RU', { year: 'numeric', month: 'short', day: 'numeric' });
         }
+        var tgConnected = document.getElementById('tgConnected');
+        var tgConnect = document.getElementById('tgConnect');
         if (profile.telegram_id) {
-          document.getElementById('acctTelegram').textContent = profile.telegram_id;
+          var label = profile.telegram_username ? ('@' + profile.telegram_username.replace(/^@/, '')) : profile.telegram_id;
+          document.getElementById('acctTelegram').textContent = label;
+          if (tgConnected) { document.getElementById('tgUserLabel').textContent = label; tgConnected.style.display = 'block'; }
+          if (tgConnect) tgConnect.style.display = 'none';
+        } else {
+          if (tgConnected) tgConnected.style.display = 'none';
+          if (tgConnect) tgConnect.style.display = 'block';
         }
       }
     }
