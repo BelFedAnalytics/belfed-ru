@@ -132,7 +132,7 @@ footer{padding:32px 48px;border-top:1px solid #111;display:flex;justify-content:
 Результаты включают все торговые возможности, опубликованные в публичных и приватных каналах. Идеи, по которым публиковались сигналы входа и выхода для подписчиков сервиса, отмечены &laquo;&#9679;&raquo;.
 </div>
 <div class="disclaimer">
-Впервые сталкиваетесь с R-мультипликаторами? <a href="/disclaimer.html">Как мы измеряем результаты</a> — краткое объяснение того, как читать эту таблицу. Прошлые результаты не гарантируют будущих. R-мультипликаторы рассчитываются относительно начального риска на сделку (1R = сумма риска). Эта страница обновляется вручную после закрытия каждой позиции. Никакие позиции не удаляются и не редактируются задним числом.
+Впервые сталкиваетесь с R-мультипликаторами? <a href="/disclaimer.html">Как мы измеряем результаты</a> — краткое объяснение того, как читать эту таблицу. Прошлые результаты не гарантируют будущих. R-мультипликаторы рассчитываются относительно начального риска на сделку (1R = сумма риска). Эта страница обновляется вручную после закрытия каждой позиции. Никакие позиции не удаляются и не редактируются задним числом. Результаты относятся к дате закрытия (выхода) сделки; до­бор и частичные фиксации одной позиции учитываются как одна сделка.
 </div>
 
 <footer>
@@ -169,13 +169,13 @@ footer{padding:32px 48px;border-top:1px solid #111;display:flex;justify-content:
         document.querySelectorAll('tbody tr').forEach(function(r){
             var c=r.querySelectorAll('td');
             if(c.length<8)return;
-            var d=c[3].textContent.trim().split('.');
+            var d=c[4].textContent.trim().split('.');
             var ey=d.length===3?parseInt(d[2]):0;
             var ok=yr==='all'||ey===parseInt(yr);
             r.style.display=ok?'':'none';
             if(ok){
                 n++;
-                var rv=parseFloat(c[7].textContent.trim().replace('R','').replace(',',''))||0;
+                var rv=parseFloat(c[7].textContent.trim().replace('R','').replace(',','.'))||0;
                 tR+=rv;
                 if(rv>0){w++;wR+=rv}else{l++;lR+=rv}
                 c[0].textContent=String(n).padStart(2,'0');

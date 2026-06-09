@@ -60,7 +60,7 @@
         .stat-item .stat-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); margin-top: 6px; }
         .stats-columns { border-top: 1px solid var(--border); display: flex; padding: 0; }
         .stats-column { flex: 1; padding: 40px; }
-        .stats-column:first-child { border-right: 1px solid var(--border); }
+        .stats-column:not(:last-child) { border-right: 1px solid var(--border); }
         .stats-column-header { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); margin-bottom: 24px; }
         .stats-column-items { display: flex; gap: 48px; }
         /* ABOUT */
@@ -101,7 +101,7 @@
             .hero { padding: 60px 20px 40px; }
             .stats-bar { padding: 20px; gap: 32px; flex-wrap: wrap; }
             .stats-columns { flex-direction: column; }
-            .stats-column:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+            .stats-column:not(:last-child) { border-right: none; border-bottom: 1px solid var(--border); }
             .about-section, .services-section, .subscribe-section { padding: 40px 20px; }
             .services-grid { grid-template-columns: 1fr; }
             footer { padding: 20px; flex-direction: column; text-align: center; }
@@ -142,11 +142,19 @@
 
 <section class="stats-columns">
     <div class="stats-column">
+        <div class="stats-column-header">// 2026 Акции</div>
+        <div class="stats-column-items">
+            <div class="stat-item"><div class="stat-value">+93.54R</div><div class="stat-label">Результат</div></div>
+            <div class="stat-item"><div class="stat-value">62%</div><div class="stat-label">Процент побед</div></div>
+            <div class="stat-item"><div class="stat-value">87</div><div class="stat-label">Закрытых сделок</div></div>
+        </div>
+    </div>
+    <div class="stats-column">
         <div class="stats-column-header">// 2025 Акции</div>
         <div class="stats-column-items">
-            <div class="stat-item"><div class="stat-value">+85.96R</div><div class="stat-label">Результат</div></div>
-            <div class="stat-item"><div class="stat-value">47.89%</div><div class="stat-label">Процент побед</div></div>
-            <div class="stat-item"><div class="stat-value">71</div><div class="stat-label">Закрытых сделок</div></div>
+            <div class="stat-item"><div class="stat-value">+70.33R</div><div class="stat-label">Результат</div></div>
+            <div class="stat-item"><div class="stat-value">42.62%</div><div class="stat-label">Процент побед</div></div>
+            <div class="stat-item"><div class="stat-value">61</div><div class="stat-label">Закрытых сделок</div></div>
         </div>
     </div>
     <div class="stats-column">
@@ -159,7 +167,7 @@
     </div>
 </section>
 
-<div class="disclaimer-line">Методология расчёта результатов и раскрытие рисков представлены в <a href="/disclaimer.html">ограничении ответственности</a>.</div>
+<div class="disclaimer-line">Результаты относятся к дате закрытия (выхода) сделки; до­бор и частичные фиксации одной позиции учитываются как одна сделка. Методология расчёта результатов и раскрытие рисков представлены в <a href="/disclaimer.html">ограничении ответственности</a>.</div>
 
 <section class="about-section" id="about">
     <h2>// О нас</h2>
