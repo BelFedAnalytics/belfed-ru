@@ -154,7 +154,7 @@ footer{padding:32px 48px;border-top:1px solid #111;display:flex;justify-content:
     yf.className='yf';
     ['all','2026','2025'].forEach(function(y,i){
         var b=document.createElement('button');
-        b.className='yfb'+(i===0?' on':'');
+        b.className='yfb'+(y==='2026'?' on':'');
         b.setAttribute('data-y',y);
         b.textContent=y==='all'?'Всего':y;
         yf.appendChild(b);
