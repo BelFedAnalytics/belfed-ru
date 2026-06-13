@@ -137,7 +137,7 @@ async function handleSignUp() {
     var userId = res.data && res.data.user ? res.data.user.id : null;
     var consentNow = new Date().toISOString();
 
-    // Activate the 7-day trial immediately — no Telegram step required.
+    // Activate the 14-day trial immediately — no Telegram step required.
     if (userId) {
       try {
         await supaClient.rpc('start_web_trial', {
@@ -186,7 +186,7 @@ async function handleSignUp() {
     msgEl.innerHTML = ''
       + '<div class="signup-success">'
       + '  <h3>Аккаунт создан — пробный период активен</h3>'
-      + '  <p>Доступ к личному кабинету открыт на 7 дней. Мы отправили письмо на <b>' + email + '</b> — подтвердите адрес, чтобы получать уведомления.</p>'
+      + '  <p>Доступ к личному кабинету открыт на 14 дней. Мы отправили письмо на <b>' + email + '</b> — подтвердите адрес, чтобы получать уведомления.</p>'
       + '  <p style="margin-top:12px"><b>Не пришло письмо?</b> Проверьте папку «Спам» или <a href="#" onclick="resendConfirmation(\'' + email.replace(/'/g, "\\'") + '\');return false;">отправьте повторно</a>.</p>'
       + '  <a class="cta-tg" href="' + deepLink + '" target="_blank" rel="noopener">Подключить Telegram-уведомления (по желанию)</a>'
       + '  <div class="signup-success-note">Telegram — это онлайн-алерты о сделках. Личный кабинет работает и без него. Ссылка одноразовая, действует 15 минут.</div>'
@@ -206,7 +206,7 @@ async function handleSignUp() {
     }
     errEl.style.display = 'block';
   } finally {
-    if (btn) { btn.disabled = false; btn.textContent = prevBtnText || 'Начать 7 дней бесплатно'; }
+    if (btn) { btn.disabled = false; btn.textContent = prevBtnText || 'Начать 14 дней бесплатно'; }
   }
 }
 
