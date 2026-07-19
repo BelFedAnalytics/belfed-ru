@@ -190,5 +190,210 @@ footer{flex-direction:column;gap:8px;text-align:center}
     <a href="/oferta.html" style="color:#888;font-size:11px;text-decoration:none;letter-spacing:1.5px;text-transform:uppercase">Оферта</a>
 <span>belfed.ru</span>
 </footer>
-</body>
+<!-- === PR #2: checkout modal === -->
+<style>
+.ck-cta-wrap{margin:24px 0 8px;text-align:left}
+.ck-cta{font-family:inherit;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;background:#111;color:#fff;border:1px solid #111;padding:14px 28px;cursor:pointer;transition:all .2s}
+.ck-cta:hover{background:#fff;color:#111}
+.ck-overlay{position:fixed;inset:0;background:rgba(17,17,17,.72);display:none;align-items:flex-start;justify-content:center;z-index:1000;padding:40px 16px;overflow-y:auto}
+.ck-overlay.is-open{display:flex}
+.ck-modal{background:#fff;border:1px solid #111;max-width:560px;width:100%;padding:36px 36px 28px;margin:auto;position:relative;font-family:'Courier Prime','Courier New',monospace}
+.ck-close{position:absolute;top:12px;right:16px;background:none;border:none;font-family:inherit;font-size:22px;color:#888;cursor:pointer;line-height:1}
+.ck-close:hover{color:#111}
+.ck-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:10px}
+.ck-title{font-size:22px;font-weight:700;margin-bottom:22px;color:#111}
+.ck-summary{border:1px solid #111;padding:18px 20px;margin-bottom:22px;background:#fafafa;font-size:13px;line-height:1.7;color:#333}
+.ck-row{display:flex;justify-content:space-between;gap:16px}
+.ck-row.total{border-top:1px solid #e0e0e0;padding-top:10px;margin-top:8px;font-weight:700;font-size:15px;color:#111}
+.ck-field{margin-bottom:14px}
+.ck-field label{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:6px}
+.ck-field input{width:100%;padding:10px 12px;border:1px solid #ccc;font-family:inherit;font-size:13px;background:#fff;color:#111}
+.ck-field input:focus{outline:none;border-color:#111}
+.ck-checks{margin:14px 0 18px}
+.ck-check{display:flex;gap:10px;margin-bottom:10px;font-size:12px;color:#333;line-height:1.55;cursor:pointer}
+.ck-check input{margin-top:3px;flex-shrink:0;cursor:pointer}
+.ck-check a{color:#111;text-decoration:underline}
+.ck-note{border:1px solid #ddd;background:#f9f9f9;padding:12px 14px;margin-bottom:16px;font-size:12px;color:#555;line-height:1.6;display:none}
+.ck-note.is-visible{display:block}
+.ck-note a{color:#111;font-weight:700;text-decoration:underline}
+.ck-error{font-size:12px;color:#b00020;margin:8px 0;min-height:16px}
+.ck-actions{display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap;margin-top:4px}
+.ck-btn{font-family:inherit;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;border:1px solid #111;padding:12px 22px;cursor:pointer;transition:opacity .2s}
+.ck-btn-secondary{background:#fff;color:#111}
+.ck-btn-primary{background:#111;color:#fff}
+.ck-btn-primary:disabled{opacity:.35;cursor:not-allowed}
+</style>
+
+<div class="ck-cta-wrap">
+  <button type="button" class="ck-cta" id="ckOpenBtn">Оформить подписку — 1 500 ₽/мес</button>
+</div>
+
+<div class="ck-overlay" id="ckOverlay" role="dialog" aria-modal="true" aria-labelledby="ckTitle">
+  <div class="ck-modal">
+    <button type="button" class="ck-close" id="ckCloseBtn" aria-label="Закрыть">×</button>
+    <div class="ck-label">// Оформление подписки</div>
+    <div class="ck-title" id="ckTitle">Подтверждение заказа</div>
+
+    <div class="ck-summary">
+      <div class="ck-row"><span>Тариф</span><span>BelFed Analytics — Премиум</span></div>
+      <div class="ck-row"><span>Период</span><span>1 месяц, автопродление</span></div>
+      <div class="ck-row"><span>Способ оплаты</span><span>ЮKassa</span></div>
+      <div class="ck-row total"><span>К оплате</span><span>1 500 ₽</span></div>
+    </div>
+
+    <form id="ckForm" novalidate>
+      <div class="ck-field">
+        abel for="ckEmail">Email для чека (54-ФЗ)</label>
+        <input type="email" id="ckEmail" required autocomplete="email" placeholder="you@example.com">
+      </div>
+
+      <div class="ck-checks">
+        abel class="ck-check"><input type="checkbox" id="ck1" required>
+          <span>Я принимаю условия <a href="/oferta.html" target="_blank" rel="noopener">Оферты</a> и политику возврата, указанную в <a href="/disclaimer.html" target="_blank" rel="noopener">Ограничении ответственности</a>.</span>
+        </label>
+        abel class="ck-check"><input type="checkbox" id="ck2" required>
+          <span>Даю согласие на обработку персональных данных в соответствии с <a href="/disclaimer.html" target="_blank" rel="noopener">152-ФЗ</a>.</span>
+        </label>
+        abel class="ck-check"><input type="checkbox" id="ck3" required>
+          <span>Согласен на автоматические рекуррентные списания 1 500 ₽ каждые 30 дней до отмены подписки в личном кабинете.</span>
+        </label>
+      </div>
+
+      <div class="ck-note" id="ckAuthNote">
+        Для оплаты нужен аккаунт. <a href="/members.html?next=%2Fpricing.html%3Fautopay%3D1" id="ckLoginLink">Войти или зарегистрироваться →</a>
+      </div>
+
+      <div class="ck-error" id="ckError" role="alert"></div>
+
+      <div class="ck-actions">
+        <button type="button" class="ck-btn ck-btn-secondary" id="ckCancelBtn">Отмена</button>
+        <button type="submit" class="ck-btn ck-btn-primary" id="ckPayBtn" disabled>Оплатить 1 500 ₽</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/belfed-auth.js"></script>
+<script src="/belfed-payments.js"></script>
+<script>
+(function(){
+  var overlay = document.getElementById('ckOverlay');
+  var openBtn = document.getElementById('ckOpenBtn');
+  var closeBtn = document.getElementById('ckCloseBtn');
+  var cancelBtn = document.getElementById('ckCancelBtn');
+  var form = document.getElementById('ckForm');
+  var emailInput = document.getElementById('ckEmail');
+  var checks = [document.getElementById('ck1'), document.getElementById('ck2'), document.getElementById('ck3')];
+  var payBtn = document.getElementById('ckPayBtn');
+  var errBox = document.getElementById('ckError');
+  var authNote = document.getElementById('ckAuthNote');
+  var loginLink = document.getElementById('ckLoginLink');
+
+  function getClient(){
+    if (typeof supaClient !== 'undefined') return supaClient;
+    if (window.supaClient) return window.supaClient;
+    if (window.supabaseClient) return window.supabaseClient;
+    return null;
+  }
+
+  async function getSession(){
+    var c = getClient();
+    if (!c || !c.auth) return null;
+    try { var r = await c.auth.getSession(); return (r && r.data && r.data.session) || null; } catch(e){ return null; }
+  }
+
+  async function openModal(){
+    overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    errBox.textContent = '';
+    var s = await getSession();
+    if (s && s.user && s.user.email){
+      emailInput.value = s.user.email;
+      authNote.classList.remove('is-visible');
+    } else {
+      authNote.classList.add('is-visible');
+    }
+    setTimeout(function(){ emailInput.focus(); }, 50);
+    validate();
+  }
+
+  function closeModal(){
+    overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+    errBox.textContent = '';
+  }
+
+  function validate(){
+    var ok = emailInput.checkValidity() && emailInput.value.trim() !== '' && checks.every(function(c){return c.checked;});
+    payBtn.disabled = !ok;
+    return ok;
+  }
+
+  function saveConsents(){
+    try {
+      sessionStorage.setItem('belfedCheckout', JSON.stringify({
+        plan: 'month',
+        email: emailInput.value.trim(),
+        consents: { offer: true, pdn: true, recurring: true },
+        ts: Date.now()
+      }));
+    } catch(e){}
+  }
+
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  cancelBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e){ if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeModal(); });
+  emailInput.addEventListener('input', validate);
+  checks.forEach(function(c){ c.addEventListener('change', validate); });
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    e.preventDefault();
+    if (!validate()) return;
+    errBox.textContent = '';
+    var session = await getSession();
+    if (!session) {
+      authNote.classList.add('is-visible');
+      errBox.textContent = 'Сначала войдите в аккаунт, чтобы продолжить оплату.';
+      return;
+    }
+    saveConsents();
+    payBtn.disabled = true;
+    var origText = payBtn.textContent;
+    payBtn.textContent = 'Перенаправление...';
+    try {
+      if (window.BelfedPayments && typeof window.BelfedPayments.startCheckout === 'function') {
+        await window.BelfedPayments.startCheckout({ plan: 'month', return_url: window.location.origin + '/members.html?payment=success' });
+      } else {
+        throw new Error('Платёжный модуль не загружен. Обновите страницу и попробуйте снова.');
+      }
+    } catch (err) {
+      console.error('[BelfedCheckout] failed', err);
+      errBox.textContent = 'Не удалось создать платёж: ' + (err && err.message ? err.message : err) + '. Попробуйте ещё раз или напишите на contact@belfed.com';
+      payBtn.disabled = false;
+      payBtn.textContent = origText;
+    }
+  });
+
+  // Автопродолжение оплаты после возврата с логина (?autopay=1)
+  (async function tryAutopay(){
+    try {
+      var u = new URL(window.location.href);
+      if (u.searchParams.get('autopay') !== '1') return;
+      var s = await getSession();
+      if (!s) return;
+      var saved = null;
+      try { saved = JSON.parse(sessionStorage.getItem('belfedCheckout') || 'null'); } catch(e){}
+      if (!saved || !saved.consents) return;
+      if (window.BelfedPayments && typeof window.BelfedPayments.startCheckout === 'function') {
+        await window.BelfedPayments.startCheckout({ plan: 'month', return_url: window.location.origin + '/members.html?payment=success' });
+      }
+    } catch(e){ console.warn('[BelfedCheckout] autopay skip', e); }
+  })();
+})();
+</script>
+</body> 
 </html>
