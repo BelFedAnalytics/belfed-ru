@@ -165,7 +165,7 @@ footer{padding:32px 48px;border-top:1px solid #111;display:flex;justify-content:
     var sb=document.querySelector('.summary-bar');
     var stb=document.querySelector('.stats-bar');
     function go(yr){
-        var tR=0,w=0,l=0,wR=0,lR=0,n=0;
+        var tR=0,w=0,l=0,wR=0,lR=0,n=0,disp=0;
         document.querySelectorAll('tbody tr').forEach(function(r){
             var c=r.querySelectorAll('td');
             if(c.length<8)return;
@@ -174,11 +174,14 @@ footer{padding:32px 48px;border-top:1px solid #111;display:flex;justify-content:
             var ok=yr==='all'||ey===parseInt(yr);
             r.style.display=ok?'':'none';
             if(ok){
-                n++;
-                var rv=parseFloat(c[7].textContent.trim().replace('R','').replace(',','.'))||0;
-                tR+=rv;
-                if(rv>0){w++;wR+=rv}else{l++;lR+=rv}
-                c[0].textContent=String(n).padStart(2,'0');
+                disp++;
+                c[0].textContent=String(disp).padStart(2,'0');
+                var rv=parseFloat(c[7].textContent.trim().replace('R','').replace(',','.'));
+                if(!isNaN(rv)){
+                    n++;
+                    tR+=rv;
+                    if(rv>0){w++;wR+=rv}else{l++;lR+=rv}
+                }
             }
         });
         var wr=n>0?((w/n)*100).toFixed(2):'0.00';
@@ -245,7 +248,7 @@ footer{padding:32px 48px;border-top:1px solid #111;display:flex;justify-content:
         }
         var tbody=document.querySelector('tbody');
         tbody.innerHTML='';
-        var totalR=0,wins=0,losses=0,winSum=0,lossSum=0,closed=0;
+        var totalR=0,wins=0,losses=0,winSum=0,lossSum=0,closed=0,renderedCount=0;
         dataRows.forEach(function(r,idx){
             var ticker=(r[1]||'').trim();
             var dir=(r[2]||'').trim();
@@ -268,8 +271,9 @@ footer{padding:32px 48px;border-top:1px solid #111;display:flex;justify-content:
             var rClass=makeRClass(result);
             var rDisplay=formatR(result);
             var analysisCell=tvLink&&tvLink.startsWith('http')?'<a class="tv-link" href="'+tvLink+'" target="_blank">TV <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 9L9 1M9 1H3M9 1V7"/></svg></a>':'<span class="no-link">\u2014</span>';
+            renderedCount++;
             var tr=document.createElement('tr');
-            tr.innerHTML='<td class="num">'+(idx+1).toString().padStart(2,'0')+'</td><td><span class="ticker">'+ticker+'</span>'+memberDot+'</td><td><span class="badge '+dirClass+'">'+dirLabel+'</span></td><td>'+entryDate+'</td><td>'+(exitDate||'\u2014')+'</td><td>'+entryP+'</td><td>'+(exitP||'\u2014')+'</td><td class="'+rClass+'">'+rDisplay+'</td><td>'+analysisCell+'</td>';
+            tr.innerHTML='<td class="num">'+String(renderedCount).padStart(2,'0')+'</td><td><span class="ticker">'+ticker+'</span>'+memberDot+'</td><td><span class="badge '+dirClass+'">'+dirLabel+'</span></td><td>'+entryDate+'</td><td>'+(exitDate||'\u2014')+'</td><td>'+entryP+'</td><td>'+(exitP||'\u2014')+'</td><td class="'+rClass+'">'+rDisplay+'</td><td>'+analysisCell+'</td>';
             tbody.appendChild(tr);
         });
         var avgWin=wins>0?(winSum/wins):0;
